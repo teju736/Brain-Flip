@@ -23,8 +23,8 @@ app.use(cors({
       'http://localhost:5173',
       'http://localhost:3000',
     ];
-    // Allow any vercel.app subdomain or no origin (server-to-server)
-    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
+    // Allow vercel.app and onrender.com subdomains
+    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin) || /\.onrender\.com$/.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -53,15 +53,10 @@ app.use((req, res) => {
 // Error handler
 app.use(errorHandler);
 
-// For local development only
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`🎮 ArcadeHub Backend running on http://localhost:${PORT}`);
-  });
-}
-
-module.exports = app;
-
+// Start server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`🎮 ArcadeHub Backend running on port ${PORT}`);
+});
 
 module.exports = app;

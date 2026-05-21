@@ -46,9 +46,15 @@ app.use((req, res) => {
 // Error handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`🎮 ArcadeHub Backend running on http://localhost:${PORT}`);
-});
+// For local development only
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`🎮 ArcadeHub Backend running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
+
 
 module.exports = app;
